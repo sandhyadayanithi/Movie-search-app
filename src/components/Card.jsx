@@ -1,13 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState,useContext } from 'react'
 import CardDetails from './CardDetails.jsx'
+import { FavoritesContext } from "../contexts/FavoritesContext.jsx";
 
 const Card = ({data}) => {
+  const { favorites, setFavorites } = useContext(FavoritesContext);
+
   const [showDetails, setShowDetails] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null);
 
   function detailsHandler(movie){
     setShowDetails(true);
     setSelectedMovie(movie);
+  }
+
+  function favouriteHandler(movie) {
+    const alreadyExists = favorites.some(fav => fav.id === movie.id); //if atleast one item in the array matches returns true else false
+    if (!alreadyExists) {
+      setFavorites([...favorites, movie]);
+    }
   }
 
   return (
@@ -29,7 +39,7 @@ const Card = ({data}) => {
 
           <div className='flex justify-center items-center gap-3'>
             <button onClick={()=>detailsHandler(data)} className="text-xs bg-blue-800 px-2 py-1 rounded cursor-pointer">Details</button>
-            <button className="text-xs bg-pink-500 px-2 py-1 rounded cursor-pointer">Add to favourites</button>
+            <button onClick={()=>favouriteHandler(data)} className="text-xs bg-pink-500 px-2 py-1 rounded cursor-pointer">Add to favourites</button>
           </div>
         </div>
 

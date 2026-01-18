@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef} from 'react'
+import React,{useState,useEffect} from 'react'
 import Card from './Card.jsx';
 
 const Popular = () => {
@@ -10,7 +10,6 @@ const Popular = () => {
     const url=`https://api.themoviedb.org/3/movie/popular?api_key=${YOUR_API_KEY}`;
     const res=await fetch(url);
     const data=await res.json();
-    console.log(data.results);
     setMovieData(data.results);
   }
 

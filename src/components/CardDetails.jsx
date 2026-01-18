@@ -1,8 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { genreMap } from '../assets/genres.js'
+import { FavoritesContext } from "../contexts/FavoritesContext.jsx";
 
 const CardDetails = ({data,onClose}) => {
+  const { favorites, setFavorites } = useContext(FavoritesContext);
+
   const genres = data?.genre_ids?.map(id => genreMap[id]);
+
+  function favouriteHandler(movie) {
+    const alreadyExists = favorites.some(fav => fav.id === movie.id);
+    if (!alreadyExists) {
+      setFavorites([...favorites, movie]);
+    }
+  }
+
   return (
     <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
       <div className="bg-gray-800 w-170 max-h-[80vh] overflow-y-auto rounded-xl shadow-xl p-6 text-white">
@@ -13,7 +24,7 @@ const CardDetails = ({data,onClose}) => {
         <p className='font-semibold'>Rating: {data?.vote_average?.toFixed(1)}</p>
         <p>Genres: {genres.join(", ")}</p>
         <div className='flex gap-3 mt-3 justify-end'>
-          <button className='text-sm bg-pink-500 px-2 py-1 rounded cursor-pointer'>Add to favourites</button>
+          <button onClick={()=>favouriteHandler(data)} className='text-sm bg-pink-500 px-2 py-1 rounded cursor-pointer'>Add to favourites</button>
           <button onClick={onClose} className='text-sm bg-gray-900 px-2 py-1 rounded cursor-pointer'>Close</button>
         </div>
       </div>

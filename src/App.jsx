@@ -1,10 +1,10 @@
-import React,{useState} from 'react'
+import React,{useState,useContext} from 'react'
 import Popular from './components/Popular.jsx'
-import CardDetails from './components/CardDetails.jsx';
+import { FavoritesContext } from "./contexts/FavoritesContext.jsx";
+import Favourites from './components/Favourites.jsx';
 
 const App = () => {
-
-  const [favourites,setFavourites]=useState(0);
+  const { favorites, setFavorites } = useContext(FavoritesContext);
   const [toggle,setToggle]=useState(true);
 
   function popularHandler(){
@@ -18,10 +18,10 @@ const App = () => {
       <h1 className='text-center pt-10 pb-2 font-extrabold text-3xl'>Movie Search App</h1>
       <div className='flex justify-center items-center gap-4 mt-4 mb-8'>
         <button className='cursor-pointer' style={{textDecoration: toggle? 'underline': 'none',textUnderlineOffset: "6px"}} onClick={popularHandler}>Search / Popular</button>
-        <button className='cursor-pointer' style={{textDecoration: !toggle? 'underline': 'none',textUnderlineOffset: "6px"}} onClick={favouriteHandler}>Favourites ({favourites})</button>
+        <button className='cursor-pointer' style={{textDecoration: !toggle? 'underline': 'none',textUnderlineOffset: "6px"}} onClick={favouriteHandler}>Favourites ({favorites.length})</button>
       </div>
-      <Popular></Popular>
-      {/* {toggle?<Popular></Popular>:<Favourites></Favourites>} */}
+      
+      {toggle?<Popular></Popular>:<Favourites></Favourites>}
     </div>
   )
 }
