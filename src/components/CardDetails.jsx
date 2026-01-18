@@ -1,6 +1,8 @@
-import React, { useContext } from 'react'
+import React, { useContext,useEffect } from 'react'
 import { genreMap } from '../assets/genres.js'
 import { FavoritesContext } from "../contexts/FavoritesContext.jsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar,faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 const CardDetails = ({data,onClose}) => {
   const { favorites, setFavorites } = useContext(FavoritesContext);
@@ -10,9 +12,13 @@ const CardDetails = ({data,onClose}) => {
   function favouriteHandler(movie) {
     const alreadyExists = favorites.some(fav => fav.id === movie.id);
     if (!alreadyExists) {
-      setFavorites([...favorites, movie]);
+      setFavorites([movie,...favorites]);
     }
   }
+
+  useEffect(() => {
+    localStorage.setItem("fav", JSON.stringify(favorites));
+  }, [favorites]);
 
   return (
     <div className="fixed inset-0 bg-black/70 flex justify-center items-center z-50">
@@ -24,8 +30,8 @@ const CardDetails = ({data,onClose}) => {
         <p className='font-semibold'>Rating: {data?.vote_average?.toFixed(1)}</p>
         <p>Genres: {genres.join(", ")}</p>
         <div className='flex gap-3 mt-3 justify-end'>
-          <button onClick={()=>favouriteHandler(data)} className='text-sm bg-pink-500 px-2 py-1 rounded cursor-pointer'>Add to favourites</button>
-          <button onClick={onClose} className='text-sm bg-gray-900 px-2 py-1 rounded cursor-pointer'>Close</button>
+          <button onClick={()=>favouriteHandler(data)} className='text-sm bg-pink-500 px-2 py-1 rounded cursor-pointer'><FontAwesomeIcon icon={faStar} /> Add to favourites</button>
+          <button onClick={onClose} className='text-sm bg-gray-900 px-2 py-1 rounded cursor-pointer'><FontAwesomeIcon icon={faCircleXmark} /> Close</button>
         </div>
       </div>
     </div>
