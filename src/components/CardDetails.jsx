@@ -1,5 +1,6 @@
 import React, { useContext,useEffect } from 'react'
 import { genreMap } from '../assets/genres.js'
+import PropTypes from 'prop-types';
 import { FavoritesContext } from "../contexts/FavoritesContext.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar,faCircleXmark } from "@fortawesome/free-solid-svg-icons";
@@ -36,6 +37,26 @@ const CardDetails = ({data,onClose}) => {
       </div>
     </div>
   )
+}
+
+CardDetails.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    poster_path: PropTypes.string,
+    overview: PropTypes.string,
+    release_date: PropTypes.string,
+    vote_average: PropTypes.number,
+    genre_ids: PropTypes.arrayOf(PropTypes.number),
+    backdrop_path: PropTypes.string,
+    popularity: PropTypes.number,
+    vote_count: PropTypes.number,
+    adult: PropTypes.bool,
+    original_language: PropTypes.string,
+    original_title: PropTypes.string,
+    video: PropTypes.bool
+  }).isRequired,
+  onClose: PropTypes.func.isRequired
 }
 
 export default CardDetails

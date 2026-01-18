@@ -1,5 +1,6 @@
 import React, { useState,useContext,useEffect } from 'react'
 import CardDetails from './CardDetails.jsx'
+import PropTypes from 'prop-types';
 import { FavoritesContext } from "../contexts/FavoritesContext.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar,faCircleInfo } from "@fortawesome/free-solid-svg-icons";
@@ -55,5 +56,17 @@ const Card = ({data}) => {
     </>
   )
 }
+
+Card.propTypes = {
+  data: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+    poster_path: PropTypes.string,
+    overview: PropTypes.string,
+    release_date: PropTypes.string,
+    vote_average: PropTypes.number,
+    genre_ids: PropTypes.arrayOf(PropTypes.number)
+  }).isRequired
+};
 
 export default Card
